@@ -1,0 +1,6 @@
+{
+  "accuracy_train": 0.22335066956058808,
+  "accuracy_test": 0.1637984019668101,
+  "dataset": "svhn",
+  "model": "logreg"
+}

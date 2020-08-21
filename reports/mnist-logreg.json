@@ -1,0 +1,6 @@
+{
+  "accuracy_train": 0.9173833333333333,
+  "accuracy_test": 0.9139,
+  "dataset": "mnist",
+  "model": "logreg"
+}

@@ -1,0 +1,8 @@
+### makes git recognise the directory (even if it is emtpy), and,
+### at same time, safeguards against accidentally commiting any content
+*
+!.gitignore
+
+!*.json
+!*.tex
+!*.txt

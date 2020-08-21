@@ -1,0 +1,6 @@
+{
+  "accuracy_train": 0.965109136328269,
+  "accuracy_test": 0.9110709895513215,
+  "dataset": "svhn",
+  "model": "vgg"
+}

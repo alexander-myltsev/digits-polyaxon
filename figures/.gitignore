@@ -1,0 +1,13 @@
+### makes git recognise the directory (even if it is emtpy), and,
+### at same time, safeguards against accidentally commiting any content
+*
+!.gitignore
+
+!*.ps
+!*.eps
+!*.pdf
+!*.svg
+
+!*.png
+!*.jpg
+!*.jpeg

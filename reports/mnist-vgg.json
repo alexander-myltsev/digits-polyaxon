@@ -1,0 +1,6 @@
+{
+  "accuracy_train": 0.99455,
+  "accuracy_test": 0.9886,
+  "dataset": "mnist",
+  "model": "vgg"
+}
