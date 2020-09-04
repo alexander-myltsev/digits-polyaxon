@@ -1,12 +1,13 @@
-import os
+import PIL
 import json
-
-import numpy as np
-from comet_ml import Experiment as CometExperiment
 import matplotlib.pyplot as plt
+import numpy as np
+import os
+from comet_ml import Experiment as CometExperiment
+from polyaxon import tracking
 
 __all__ = [
-  'LocalLogger', 'CometLogger',
+  'LocalLogger', 'CometLogger', 'PolyaxonLogger',
   'get_logger',
 ]
 
@@ -94,6 +95,47 @@ class CometLogger(LocalLogger):
     plt.close(f)
 
 
+class PolyaxonLogger(LocalLogger):
+  """
+  Polyaxon logger
+  """
+
+  def __init__(self, root):
+    tracking.init()
+
+    super(PolyaxonLogger, self).__init__(root)
+
+  def log_metrics(self, dataset_name, model_name, **info):
+    super(PolyaxonLogger, self).log_metrics(dataset_name, model_name, **info)
+
+    for metric_name, value in info.items():
+      tracking.log_metric(
+        '{dataset}_{model}_{metric}'.format(dataset=dataset_name, model=model_name, metric=metric_name),
+        value,
+      )
+
+  def log_losses(self, dataset_name, model_name, losses):
+    f = self._log_learning_curve(dataset_name, model_name, losses)
+
+    # lst = list(f.canvas.get_width_height())
+    # lst.append(3)
+    # img = PIL.Image.fromarray(np.fromstring(f.canvas.tostring_rgb(), dtype=np.uint8).reshape(lst))
+
+    # print(f)
+    # data = np.fromstring(f.canvas.tostring_rgb(), dtype=np.uint8, sep='')
+    # data = data.reshape(f.canvas.get_width_height()[::-1] + (3,))
+    # print(data.shape)
+
+    # width, height = f.get_size_inches() * f.get_dpi()
+    # data = np.fromstring(f.canvas.tostring_rgb(), dtype=np.uint8).reshape(height, width, 3)
+
+    # tracking.log_image(
+    #   data=data,
+    #   name="Losses",
+    # )
+    plt.close(f)
+
+
 def get_logger(logger, root, project=None, workspace=None) -> Logger:
   from digits_utils import LocalLogger, CometLogger
 
@@ -106,6 +148,10 @@ def get_logger(logger, root, project=None, workspace=None) -> Logger:
 
     experiment = CometExperiment(project_name=project, workspace=workspace)
     return CometLogger(root=root, experiment=experiment)
+
+  elif logger.lower() == "polyaxon":
+    polyaxon_logger = PolyaxonLogger(root=root)
+    return polyaxon_logger
 
   else:
     raise ValueError("Unknown experiment context")

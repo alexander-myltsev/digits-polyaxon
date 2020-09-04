@@ -100,7 +100,7 @@ if __name__ == '__main__':
   parser.add_argument('--output-root', type=str, default='output/', help='root directory to write various statistics to')
   parser.add_argument('--device', type=str, default='cpu', help='device in torch format')
   parser.add_argument('--batch-size', type=int, default=32)
-  parser.add_argument('--logger', type=str, choices=['local', 'comet'], default='local')
+  parser.add_argument('--logger', type=str, choices=['local', 'comet', 'polyaxon'], default='local')
   parser.add_argument('--project', type=str, default=None, help='project name for comet logger, None by default')
   parser.add_argument('--workspace', type=str, default=None, help='workspace for comet logger, None by default')
   parser.add_argument('--quiet', type=bool, default=False)
